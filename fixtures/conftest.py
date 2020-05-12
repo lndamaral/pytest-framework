@@ -1,11 +1,11 @@
 """Defines fixtures available to all tests for test repositories."""
 from assertpy import soft_assertions
 
-from framework.fixtures.application_fixtures import app  # noqa: F401
-from framework.fixtures.application_fixtures import app_instance  # noqa: F401
-from framework.fixtures.core_fixtures import custom_args  # noqa: F401
-from framework.fixtures.core_fixtures import logger  # noqa: F401
-from framework.fixtures.core_fixtures import runner  # noqa: F401
+from fixtures.application_fixtures import app  # noqa: F401
+from fixtures.application_fixtures import app_instance  # noqa: F401
+from fixtures.core_fixtures import custom_args  # noqa: F401
+from fixtures.core_fixtures import logger  # noqa: F401
+from fixtures.core_fixtures import runner  # noqa: F401
 
 import pytest
 

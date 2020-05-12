@@ -1,5 +1,5 @@
 """Fixtures for Application."""
-from framework.core.application import Application
+from core.application import Application
 
 import pytest
 

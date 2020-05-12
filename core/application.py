@@ -1,6 +1,6 @@
 """Application Module."""
-from framework.core.element import Element as element_wrapper
-from framework.core.utils import Utils
+from core.element import Element as element_wrapper
+from core.utils import Utils
 
 
 class Application:

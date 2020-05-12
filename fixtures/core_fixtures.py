@@ -1,6 +1,6 @@
 """Fixtures for Core."""
-from framework.core.logger import Logger
-from framework.core.runner import Runner
+from core.logger import Logger
+from core.runner import Runner
 
 import pytest
 
