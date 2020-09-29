@@ -1,6 +1,7 @@
 """Application Module."""
 from core.element import Element as element_wrapper
 from core.utils import Utils
+from time import sleep
 
 
 class Application:
@@ -11,8 +12,6 @@ class Application:
     roughly represents one running the application process in the system.
     """
 
-    DESIGNER_TITLE = {"title_re": "Alteryx (Designer|YxDebug)"}
-
     def __init__(self, **kwargs):
         self.app = None
         self.pid = None
@@ -21,7 +20,9 @@ class Application:
         self.main_window = None
         self.logger = kwargs.get("logger")
         self.utils = Utils(logger=self.logger)
-        self.executable_path = "C:/Program Files/Alteryx/bin/AlteryxGui.exe"
+        self.settings = self.utils.load_json("./settings.json")
+        self.executable_path = self.settings["executable_path"]
+        self.process_name = self.settings["process_name"]
 
     def setup(self):
         """Perform setup for the Application class."""
@@ -34,22 +35,20 @@ class Application:
             self.close()
 
     def start(self):
-        """Start the application.
+        """Start the application.pid
 
         Cache all the information necessary to easily link this instance
         to a running the application process.
         """
-        self.utils.kill_processes_by_name_filter("AlteryxGui")
-
+        self.utils.kill_processes_by_name_filter(self.process_name)
         self.app = self.utils.start_application(self.executable_path)
-        self.main_window = self.app.window(**self.DESIGNER_TITLE)
-        self.handle = self.main_window.handle
-        self.pid = self.utils.get_pid(app=self.app)
+        self.main_window = self.app.top_window()
+        self.pid = self.app.process
         self.main_window.maximize()
 
     def close(self):
         """Close the application."""
-        self.utils.kill_processes_by_name_filter("AlteryxGui")
+        self.utils.kill_processes_by_name_filter(self.process_name)
 
     def find_element(self, selectors, parent=None, timeout=10):
         """Find an element satisfies the selectors and is under parent.
@@ -99,7 +98,10 @@ class Application:
             }
         )
 
-        parent = parent or self.main_window
+        if parent:
+            parent = self.main_window.child_window(**parent)
+        else:
+            parent = self.main_window
         self.logger.debug(f"Find element with given selectors: {selectors}")
         element = parent.child_window(**selectors)
 

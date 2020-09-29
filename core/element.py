@@ -9,7 +9,7 @@ class Element:
         self.element = element
         self.selectors = self.element.criteria[1:]
 
-    def click(self,):
+    def click(self):
         """Click the specified element."""
         self.logger.info(f"Click on element: {self.selectors}")
         self.element.click_input()

@@ -1,0 +1,7 @@
+pytest
+assertpy
+black
+flake8
+psutil
+pywinauto
+pywin32
